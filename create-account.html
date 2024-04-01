@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="fuzzy" />
+    <meta name="keywords" content="fuzzy" />
+    <meta name="author" content="fuzzy" />
+    <link rel="manifest" href="manifest.json" />
+    <link rel="icon" href="assets/images/logo/favicon.png" type="image/x-icon" />
+    <title>fuzzy</title>
+    <link rel="apple-touch-icon" href="assets/images/logo/favicon.png" />
+    <meta name="theme-color" content="#122636" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="apple-mobile-web-app-title" content="fuzzy" />
+    <meta name="msapplication-TileImage" content="assets/images/logo/favicon.png" />
+    <meta name="msapplication-TileColor" content="#FFFFFF" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!--Google font-->
+    <link rel="preconnect" href="https://fonts.googleapis.com/" />
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet" />
+
+    <!-- iconsax css -->
+    <link rel="stylesheet" type="text/css" href="assets/css/vendors/iconsax.css" />
+    <!-- bootstrap css -->
+    <link rel="stylesheet" id="rtl-link" type="text/css" href="assets/css/vendors/bootstrap.min.css" />
+    <!-- Theme css -->
+    <link rel="stylesheet" id="change-link" type="text/css" href="assets/css/style.css" />
+  </head>
+
+  <body class="auth-body">
+    <!-- create account section start -->
+    <div class="auth-img">
+      <img class="img-fluid auth-bg" src="assets/images/background/auth_bg.jpg" alt="auth_bg" />
+      <div class="auth-content">
+        <div>
+          <h2>Let’s you in</h2>
+          <h4 class="p-0">Hey, You have been missed!</h4>
+        </div>
+      </div>
+    </div>
+
+    <form class="auth-form" target="_blank" id="signUp-form">
+      <div class="custom-container">
+        <div class="form-group">
+          <label for="inputusername" class="form-label">Name</label>
+          <div class="form-input mb-4">
+            <input type="text" class="form-control" id="full_name" placeholder="Enter Your Name" />
+            <i class="iconsax icons" data-icon="user-1"></i>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputemail" class="form-label">Email</label>
+          <div class="form-input mb-4">
+            <input type="email" class="form-control" id="email_login" placeholder="Enter Your Email" />
+            <i class="iconsax icons" data-icon="mail"></i>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputPassword" class="form-label">Password</label>
+          <div class="form-input">
+            <input type="password" class="form-control" id="password_login" placeholder="Enter Your Password" />
+            <i class="iconsax icons" data-icon="key"></i>
+          </div>
+        </div>
+
+        <div class="submit-btn">
+          <button class="btn auth-btn w-100" type="submit" style="color: black; font-weight: 700;" id="Register">Signup</button>
+        </div>
+        <div class="division">
+          <span>OR</span>
+        </div>
+
+        <h4 class="signup pt-0">Already have an account ?<a href="login.html"> Sign in</a></h4>
+      </div>
+    </form>
+    <!-- create account section end-->
+
+    <!-- iconsax js -->
+    <script src="assets/js/iconsax.js"></script>
+
+    <!-- bootstrap js -->
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+
+    <!-- script js -->
+    <script src="assets/js/script.js"></script>
+
+    <!-- Sweetalert CDN for Popup -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script type="module">
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js";
+      import { getAuth, createUserWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-auth.js"; 
+      // TODO: Add SDKs for Firebase products that you want to use
+      // https://firebase.google.com/docs/web/setup#available-libraries
+    
+      // Your web app's Firebase configuration
+      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+      const firebaseConfig = {
+        apiKey: "AIzaSyBfaKgDgfXKqn8QUWYZfBTOJ87bnc0o0TQ",
+        authDomain: "fuzzy-2414a.firebaseapp.com",
+        projectId: "fuzzy-2414a",
+        storageBucket: "fuzzy-2414a.appspot.com",
+        messagingSenderId: "93043591842",
+        appId: "1:93043591842:web:655dc3a677a1880e35a5fb",
+        measurementId: "G-39MSVLK2KJ"
+      };
+    
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app)
+
+
+       document.getElementById('signUp-form')
+       .addEventListener('submit', (e) => {
+          e.preventDefault();
+
+          let fullName = document.getElementById('full_name').value
+          let emailLogin = document.getElementById('email_login').value
+          let passwordLogin = document.getElementById('password_login').value   
+          
+
+          // Form Authentication
+          if(fullName.trim() === '' || emailLogin.trim() === '' || passwordLogin.trim() === ''){
+             swal({
+              text: 'All Inputs Field are required',
+              icon: 'warning'
+             })
+          }
+           else if(passwordLogin.length < 6)
+          {
+            // Popout this if the password length is less than six
+            swal({
+              text: 'Password must be atleast 6',
+              icon: 'warning'
+            })
+          } 
+          else 
+          {
+            createUserWithEmailAndPassword(auth, emailLogin, passwordLogin)
+          .then((userCredential) => {
+
+            if(userCredential){
+              swal({
+                title: 'Good Job',
+                text: 'Account created successfully',
+                icon: 'success'
+              })
+               .then(value => {
+                if(value){
+                   window.location.replace('login.html')
+                }
+               })
+
+               
+              // Set the Display Name for the user if the User Credentials
+              // Is true
+                const user = userCredential.user
+
+                if(user){
+                  updateProfile(user, {
+                    displayName: `${fullName}`
+                  })
+            }
+            }
+            
+            
+          }).catch((err) => {
+                  if (err.code === 'auth/email-already-in-use') {
+                  swal({
+                    title: 'Error',
+                    text: 'The email address is already in use',
+                    icon: 'error'
+                  });
+                } else if (err.code === 'auth/invalid-email') {
+                  swal({
+                    title: 'Error',
+                    text: 'Invalid email address',
+                    icon: 'error'
+                  });
+                } else {
+                  swal({
+                    title: 'Error',
+                    text: `${err.message}`,
+                    icon: 'error'
+                  });
+                }
+          })
+          }
+         
+       })
+    </script>
+         
+    
+  </body>
+
+</html>
